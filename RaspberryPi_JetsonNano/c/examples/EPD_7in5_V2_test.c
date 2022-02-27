@@ -126,18 +126,85 @@ int EPD_7in5_V2_test(void)
     // 2.Drawing on the image
     printf("Drawing:BlackImage\r\n");
 
-    while(1) {
-        Paint_Clear(WHITE);
+    // time string
+    // while(1) {
+    //     Paint_Clear(WHITE);
 
-        // Paint_DrawString_EN(0, 0, "22:31", &Font320, WHITE, BLACK);
-        Paint_DrawString_EN(0, 60, gentime(), &Font320, WHITE, BLACK);
+    //     // Paint_DrawString_EN(0, 0, "22:31", &Font320, WHITE, BLACK);
+    //     Paint_DrawString_EN(0, 60, gentime(), &Font320, WHITE, BLACK);
 
 
-        printf("EPD_Display\r\n");
-        EPD_7IN5_V2_Display(BlackImage);
+    //     printf("EPD_Display\r\n");
+    //     EPD_7IN5_V2_Display(BlackImage);
 
-        sleep(60);
-    }
+    //     sleep(60);
+    // }
+
+    // clock graphics
+    Paint_Clear(WHITE);
+    int x = EPD_7IN5_V2_WIDTH / 2;
+    int y = EPD_7IN5_V2_HEIGHT / 2;
+    int r = y - 20;
+
+    Paint_DrawCircle(x, y, r, BLACK, DOT_PIXEL_2X2, DRAW_FILL_EMPTY);
+    Paint_DrawCircle(x, y, 10, BLACK, DOT_PIXEL_2X2, DRAW_FILL_FULL);
+
+    // 1-12 coordinate
+    // x1: x + r * cos(60) [0.5]
+    // y1: y - r * sin(60) [0.87]
+    float sin30 = 0.5;
+    float sin60 = 0.87;
+    float cos30 = 0.87;
+    float cos60 = 0.5;
+    int numR = r - 20;
+    int absx1 = numR * cos60;
+    int absy1 = numR * sin60;
+    int x1 = x + absx1;
+    int y1 = y - absy1;
+    int x11 = x - absx1;
+    int y11 = y1;
+    int x5 = x1;
+    int y5 = y + absy1;
+    int x7 = x - absx1;
+    int y7 = y + absy1;
+
+    int absx2 = numR * cos30;
+    int absy2 = numR * sin30;
+    int x2 = x + absx2;
+    int y2 = y - absy2;
+    int x10 = x - absx2;
+    int y10 = y2;
+    int x4 = x2;
+    int y4 = y + absy2;
+    int x8 = x - absx2;
+    int y8 = y + absy2;
+
+    int x3 = x + numR;
+    int y3 = y;
+    int x9 = x - numR;
+    int y9 = y;
+
+    int x6 = x;
+    int y6 = y + numR;
+    int x12 = x;
+    int y12 = y - numR;
+
+    Paint_DrawNum(x1, y1, 1, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x2, y2, 2, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x3, y3, 3, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x4, y4, 4, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x5, y5, 5, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x6, y6, 6, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x7, y7, 7, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x8, y8, 8, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x9, y9, 9, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x10, y10, 10, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x11, y11, 11, &Font24, BLACK, WHITE);
+    Paint_DrawNum(x12, y12, 12, &Font24, BLACK, WHITE);
+
+    Paint_DrawLine(x, y, x, y - 0.5 * r, BLACK, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+    Paint_DrawLine(x, y, x4 - 20, y4 - 20, BLACK, DOT_PIXEL_2X2, LINE_STYLE_SOLID);
+    EPD_7IN5_V2_Display(BlackImage);
 
     // Paint_DrawPoint(10, 80, BLACK, DOT_PIXEL_1X1, DOT_STYLE_DFT);
     // Paint_DrawPoint(10, 90, BLACK, DOT_PIXEL_2X2, DOT_STYLE_DFT);
